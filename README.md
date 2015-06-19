@@ -18,9 +18,9 @@ CREATE TABLE `rat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 3. Configure the library from the config/rat.php:
-i. `$config['store_in'] = 'database';` - !FOR THE MOMENT ONLY WORKS WITH DATABASE so leave this part untouched!
-ii. `$config['session_user_id'] = 'user_id';` - If you want to pass the user's ID automatically to the library when creating the log, you can setup a session value and pass it to this config item. If not, leave blank.
-iii. `$config['table_name'] = '';` - If you wanted to be original and prefered another table name, you must change it here. Leave blank if the table name is 'rat'
+  1. `$config['store_in'] = 'database';` - !FOR THE MOMENT ONLY WORKS WITH DATABASE so leave this part untouched!
+  2. `$config['session_user_id'] = 'user_id';` - If you want to pass the user's ID automatically to the library when creating the log, you can setup a session value and pass it to this config item. If not, leave blank.
+  3. `$config['table_name'] = '';` - If you wanted to be original and prefered another table name, you must change it here. Leave blank if the table name is 'rat'
 
 4. Use it...
 
