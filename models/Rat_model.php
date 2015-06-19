@@ -55,7 +55,7 @@ class Rat_model extends CI_Model
         {
             $this->db->where(array('date_time >=' => $date[0], 'date_time <= ' => $date[1]));
         }
-        elseif($isset($date) && !is_array($date))
+        elseif(isset($date) && !is_array($date))
         {
             $this->db->where('date_time',$date);
         }
