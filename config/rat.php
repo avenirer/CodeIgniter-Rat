@@ -4,16 +4,12 @@
  * "store_in" allows you to set your preference regarding the storage of your logs.
  * You can store the logs inside a database by passing "database" as value,
  * or inside a directory by passing the directory location as value (relative to APPPATH).
- * If nothing is set, it will save the logs inside the "logs" directory.
+ * If nothing is set, it will save the logs inside the "application/logs" directory.
  *
- * If you decide to store the logs inside a database this is the sql for the "rat_lib" table
+ * If you decide to store the logs inside a database this is the sql for the "rat" table
  *
  *
 SET NAMES utf8;
-SET time_zone = '+00:00';
-SET foreign_key_checks = 0;
-SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
-
 DROP TABLE IF EXISTS `rat`;
 CREATE TABLE `rat` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -27,6 +23,7 @@ CREATE TABLE `rat` (
  *
  * If you decide to store the logs inside a directory make sure the directory and its files are writable (755).
  */
-$config['store_in'] = 'database'; // !FOR THE MOMENT ONLY WORKS WITH DATABASE!
+//$config['store_in'] = '';
+$config['store_in'] = 'database';
 $config['session_user_id'] = 'user_id'; // You can tell the library to take the user id from a session variable
 $config['table_name'] = ''; // If you prefer to name the table other than "rat" you can set it here...
