@@ -1,65 +1,153 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-defined('BASEPATH') OR exit('No direct script access allowed');
-
-class Rat_model extends CI_Model
+class Rat
 {
-    private $_rat_table;
+    private $_store_in;
+    private $ci;
     public function __construct()
     {
-        parent::__construct();
-        $this->load->config('rat', TRUE);
-        $this->_rat_table = $this->config->item('table_name','rat');
-        if(empty($this->_rat_table)) $this->_rat_table = 'rat';
-        $this->_verify_table();
+        $this->ci = & get_instance();
+        $this->ci->load->config('rat', TRUE);
+        $this->_store_in = $this->ci->config->item('store_in', 'rat');
+        if(empty($this->_store_in)) $this->_store_in = 'logs';
+        $this->_verify_settings();
     }
 
-    private function _verify_table()
+    /*
+     * log something
+     */
+    public function log($message, $user_id = '0', $code = '0')
     {
-        if(!$this->db->table_exists($this->_rat_table))
+        $date_time = date('Y-m-d H:i:s');
+        $session_user_id = $this->ci->config->item('session_user_id','rat');
+        if(($user_id=='0') && !empty($session_user_id))
         {
-            show_error('That rat won\'t squeal a thing because he has no database table set up...');
+            $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '0';
         }
-    }
 
-    public function set_message($insert_data)
-    {
-        if($this->db->insert($this->_rat_table,$insert_data))
+        if($this->_set_message($message,$user_id,$code,$date_time))
         {
             return TRUE;
         }
         else
         {
-            show_error('That rat... you must pop it... or repair the table...');
+            show_error('That rat... you must pop it... or repair the library...');
         }
         return FALSE;
     }
 
-    public function get_messages($where = NULL, $order_by = NULL, $limit = NULL)
+    /*
+     * delete logs
+     */
+
+    public function delete_log($date = NULL)
     {
-        if(isset($where) && !empty($where)) $this->db->where($where);
-        if(isset($order_by)) $this->db->order_by($order_by);
-        if(isset($limit)) $this->db->limit($limit);
-        $query = $this->db->get($this->_rat_table);
-        if($query->num_rows()>0)
+        if($this->_delete_logs($date))
         {
-            return $query->result();
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
+    public function delete_user_log($user_id, $date = NULL)
+    {
+        if($this->_delete_logs($user_id, $date))
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
+    /*
+     * retrieve something
+     */
+    public function get_log($code = NULL, $date = NULL, $order_by = NULL, $limit = NULL)
+    {
+        return $this->_get_messages(NULL, $code, $date, $order_by, $limit);
+    }
+
+    public function get_user_log($user_id, $code = NULL, $date = NULL, $order_by = NULL, $limit = NULL)
+    {
+        return $this->_get_messages($user_id, $code, $date, $order_by, $limit);
+    }
+
+
+
+    private function _set_message($message,$user_id,$code,$date_time)
+    {
+        if($this->_store_in == 'database')
+        {
+            $insert_data = array(
+                'user_id' => $user_id,
+                'date_time' => $date_time,
+                'code' => $code,
+                'message' => $message
+            );
+            if($this->ci->rat_model->set_message($insert_data))
+            {
+                return TRUE;
+            }
         }
         return FALSE;
     }
 
-    public function delete_messages($where=NULL,$date = NULL)
+    private function _get_messages($user_id = NULL, $code = NULL, $date = NULL, $order_by = NULL, $limit = NULL)
     {
-        if(isset($where) && !empty($where)) $this->db->where($where);
-        if(isset($date) && is_array($date))
+        if($this->_store_in == 'database')
         {
-            $this->db->where(array('date_time >=' => $date[0], 'date_time <= ' => $date[1]));
+            $where = array();
+            if(isset($user_id)) $where['user_id'] = $user_id;
+            if(isset($code)) $where['code'] = $code;
+            if(isset($date)) $where['date_time'] = $date;
+            return $this->ci->rat_model->get_messages($where, $order_by, $limit);
         }
-        elseif(isset($date) && !is_array($date))
+        return FALSE;
+    }
+
+    private function _delete_logs($user_id = NULL,$date = NULL)
+    {
+        $where = array();
+        if($this->_store_in == 'database')
         {
-            $this->db->where('date_time',$date);
+            if(isset($user_id)) $where['user_id'] = $user_id;
+            if($this->ci->rat_model->delete_messages($where,$date))
+            {
+                return TRUE;
+            }
+            return FALSE;
         }
-        $this->db->delete($this->_rat_table);
-        return TRUE;
+    }
+
+    private function _set_to_file()
+    {
+
+    }
+
+    private function _get_from_db()
+    {
+
+    }
+
+    private function _get_from_file()
+    {
+
+    }
+
+    private function _verify_settings()
+    {
+        if($this->_store_in == 'database')
+        {
+            $this->ci->load->model('rat_model');
+        }
+        else
+        {
+            exit;
+        }
     }
 }
