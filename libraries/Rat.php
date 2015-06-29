@@ -16,10 +16,10 @@ class Rat
     /*
      * log something
      */
-    public function log($message, $user_id = '0', $code = '0')
+    public function log($message, $user_id = 0, $code = 0)
     {
         $session_user_id = $this->ci->config->item('session_user_id','rat');
-        if(($user_id=='0') && !empty($session_user_id))
+        if(($user_id==0) && !empty($session_user_id))
         {
             $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '0';
         }
