@@ -35,18 +35,10 @@ $this->load->library('rat');
 
 The log() method allows you to write the log. You must pass it the `$message` you want to write. If you didn't set the `$config['session_user_id']`, you can also pass it a user ID. For your convenience, you also can pass a code of the message; who knows, maybe you want to have different colors on the messages when you output the logs. You can do that by passing a code to the message you write.
 
-### get_log($code = NULL, $date = NULL, $order_by = NULL, $limit = NULL)
+### get_log($user_id = NULL, $code = NULL, $date = NULL, $order_by = NULL, $limit = NULL)
 
-The get_log() method allows you to retrieve the logs...
+The get_log() method allows you to retrieve the logs of a/many user/s...
 
-### get_user_log($user_id, $code = NULL, $date = NULL, $order_by = NULL, $limit = NULL)
+### delete_log($user_id = NULL, $date = NULL)
 
-The get_user_log() method allows you to retrieve the logs regarding a specific user...
-
-### delete_log($date = NULL)
-
-The delete_log() method allows you do delete the logs regarding of a date in time...
-
-### delete_user_log($user_id, $date = NULL)
-
-The delete_user_log() method allows you to delete the log regarding a specific user and/or date...
+The delete_log() method allows you do delete the (user) logs regarding of a date in time...
