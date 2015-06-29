@@ -146,6 +146,11 @@ class Rat
         if($this->_store_in == 'database')
         {
             if(isset($user_id)) $where['user_id'] = $user_id;
+            if(isset($date))
+            {
+                $where['date_time >='] = $date.' 00:00:00';
+                $where['date_time <='] = $date.' 23:59:59';
+            }
             if($this->ci->rat_model->delete_messages($where,$date))
             {
                 return TRUE;
