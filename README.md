@@ -31,18 +31,22 @@ You can either autoload the library (I don't advise you to do that), or load the
 $this->load->library('rat');
 ```
 
-### tattle($message, $user_id = '0', $code = '0', $date_time = NULL)
+### log($message, $user_id = '0', $code = '0')
 
-The tattle() method allows you to write the log. You must pass it the `$message` you want to write. If you didn't set the `$config['session_user_id']`, you can also pass it a user ID. For your convenience, you also can pass a code of the message; who knows, maybe you want to have different colors on the messages when you output the logs. You can do that by passing a code to the message you write.
+The log() method allows you to write the log. You must pass it the `$message` you want to write. If you didn't set the `$config['session_user_id']`, you can also pass it a user ID. For your convenience, you also can pass a code of the message; who knows, maybe you want to have different colors on the messages when you output the logs. You can do that by passing a code to the message you write.
 
-### squeal_all($user_id = NULL, $code = NULL, $date = NULL, $order_by = NULL, $limit = NULL)
+### get_log($code = NULL, $date = NULL, $order_by = NULL, $limit = NULL)
 
-The squeal_all() method allows you to retrieve the logs...
+The get_log() method allows you to retrieve the logs...
 
-### squeal_on($user_id,$date = NULL)
+### get_user_log($user_id, $code = NULL, $date = NULL, $order_by = NULL, $limit = NULL)
 
-The squeal_on() method allows you to retrieve the logs regarding a specific user...
+The get_user_log() method allows you to retrieve the logs regarding a specific user...
 
-### wipe($user_id = NULL, $date = NULL)
+### delete_log($date = NULL)
 
-The wipe() method allows you do delete the logs regarding a user...
+The delete_log() method allows you do delete the logs regarding of a date in time...
+
+### delete_user_log($user_id, $date = NULL)
+
+The delete_user_log() method allows you to delete the log regarding a specific user and/or date...
