@@ -48,17 +48,9 @@ class Rat_model extends CI_Model
         return FALSE;
     }
 
-    public function delete_messages($where=NULL,$date = NULL)
+    public function delete_messages($where=NULL)
     {
         if(isset($where) && !empty($where)) $this->db->where($where);
-        if(isset($date) && is_array($date))
-        {
-            $this->db->where(array('date_time >=' => $date[0], 'date_time <= ' => $date[1]));
-        }
-        elseif(isset($date) && !is_array($date))
-        {
-            $this->db->where('date_time',$date);
-        }
         $this->db->delete($this->_rat_table);
         return TRUE;
     }
