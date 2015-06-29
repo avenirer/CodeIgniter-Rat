@@ -151,7 +151,7 @@ class Rat
                 $where['date_time >='] = $date.' 00:00:00';
                 $where['date_time <='] = $date.' 23:59:59';
             }
-            if($this->ci->rat_model->delete_messages($where,$date))
+            if($this->ci->rat_model->delete_messages($where))
             {
                 return TRUE;
             }
