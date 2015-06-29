@@ -107,7 +107,11 @@ class Rat
             $where = array();
             if(isset($user_id)) $where['user_id'] = $user_id;
             if(isset($code)) $where['code'] = $code;
-            if(isset($date)) $where['date_time'] = $date;
+            if(isset($date))
+            {
+                $where['date_time >='] = $date.' 00:00:00';
+                $where['date_time <='] = $date.' 23:59:59';
+            }
             if(!isset($order_by)) $order_by = 'date_time DESC';
             return $this->ci->rat_model->get_messages($where, $order_by, $limit);
         }
