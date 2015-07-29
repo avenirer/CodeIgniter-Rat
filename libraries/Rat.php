@@ -21,7 +21,7 @@ class Rat
         $session_user_id = $this->ci->config->item('session_user_id','rat');
         if(($user_id==0) && !empty($session_user_id))
         {
-            $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '0';
+            $user_id = isset($_SESSION[$session_user_id]) ? $_SESSION[$session_user_id] : '0';
         }
 
         if($this->_set_message($message,$user_id,$code))
