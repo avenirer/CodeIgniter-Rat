@@ -31,7 +31,7 @@ You can either autoload the library (I don't advise you to do that), or load the
 $this->load->library('rat');
 ```
 
-### log($message, $user_id = '0', $code = '0')
+### log($message, $code = 0, $user_id = 0)
 
 The log() method allows you to write the log. You must pass it the `$message` you want to write. If you didn't set the `$config['session_user_id']`, you can also pass it a user ID. For your convenience, you also can pass a code of the message; who knows, maybe you want to have different colors on the messages when you output the logs. You can do that by passing a code to the message you write.
 
