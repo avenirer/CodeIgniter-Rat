@@ -39,7 +39,17 @@ class Rat_model extends CI_Model
     {
         if(isset($where) && !empty($where)) $this->db->where($where);
         if(isset($order_by)) $this->db->order_by($order_by);
-        if(isset($limit)) $this->db->limit($limit);
+        if(isset($limit))
+        {
+            if(is_array($limit))
+            {
+                $this->db->limit($limit[0],$limit[1]);
+            }
+            else
+            {
+                $this->db->limit($limit);
+            }
+        }
         $query = $this->db->get($this->_rat_table);
         if($query->num_rows()>0)
         {
